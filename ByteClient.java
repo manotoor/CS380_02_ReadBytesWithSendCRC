@@ -1,3 +1,8 @@
+import java.net.Socket;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.zip.CRC32;
+
 public class ByteClient{
 	public static void main(String[] args){
 
