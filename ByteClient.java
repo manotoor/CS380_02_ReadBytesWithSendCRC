@@ -13,12 +13,32 @@ public class ByteClient{
 			CRC32 crc = new CRC32();
 
 			//Read byte by byte
-			//store first half and then push to left
-			//read second half
-			//add bytes
+			for(int i =0; i < message.length;i++){
+				//store first half and then push to left
+				byte left = (byte)is.read();
+				//read second half
+				byte right = (byte)is.read();
+				//shift over 4 bits
+				left = (byte)(left << 4);
+				//add bytes
+				message[i] = (byte)(left + right);
+			}
 
 			//convert to hex characters
+			// Print out bytes in hex
+			System.out.print("Received bytes:");
+			for (int i = 0; i < message.length; i++) {
+				if(i%10 == 0)
+					System.out.print("\n");
+				System.out.printf("%02X", message[i]);
+			}
 
+			//convert to hex characters
+			// Print out bytes in hex
+			System.out.print("Received bytes:");
+			for (int i = 0; i < message.length; i++) {
+				System.out.print(byteMessage[i]);
+			}
 			//Make crc code
 
 			//Send this CRC code as a sequence of four bytes back to the server.
@@ -30,6 +50,6 @@ public class ByteClient{
 		}catch(Exception e){
 			System.out.println("Could not connect to server");
 		}
-		socket.close();
+		System.out.println("Disconnected from server.");
 	}
 }
