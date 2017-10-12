@@ -37,14 +37,8 @@ public class ByteClient{
 					System.out.print("\n");
 				System.out.printf("%02X", message[i]);
 			}
-
-			//convert to hex characters
-			// Print out bytes in hex
-			System.out.print("Received bytes:");
-			for (int i = 0; i < message.length; i++) {
-				System.out.print(byteMessage[i]);
-			}
 			//Make crc code
+			crc.update(message);
 
 			//Send this CRC code as a sequence of four bytes back to the server.
 
