@@ -1,3 +1,8 @@
+/*
+ *	Mano Toor
+ *	Exercise 2
+ *  Read 200 bytes, 100 bytes at a time and create a CRC32 and check to make sure receiving proper message
+ */
 import java.net.Socket;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,17 +39,26 @@ public class ByteClient{
 			System.out.print("Received bytes:");
 			for (int i = 0; i < message.length; i++) {
 				if(i%10 == 0)
-					System.out.print("\n");
+					System.out.print("\n\t");
 				System.out.printf("%02X", message[i]);
 			}
 			//Make crc code
 			crc.update(message);
-
+			long error = crc.getValue();
+			System.out.printf("%nGenerated CRC32: %02X",error);
 			//Send this CRC code as a sequence of four bytes back to the server.
-
+			for(int i =3; i >=0;i--){
+				os.write((int)error >> (8*i));
+			}
 			//read response from server
 			//if good print good response
+			if(is.read() == 1){
+				System.out.println("\nResponse good.");
+			}
 			//else print not good
+			else if (is.read() == 0){
+				System.out.println("\nResponse bad.");
+			}
 
 		}catch(Exception e){
 			System.out.println("Could not connect to server");
